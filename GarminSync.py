@@ -11,7 +11,7 @@ def encrpt(password, public_key):
     cipher = PKCS1_v1_5.new(rsa)
     return base64.b64encode(cipher.encrypt(password.encode())).decode()
 
-def syncData(garmin_email, garmin_password):
+def syncData(garmin_email, garmin_password, garmin_email_gl, garmin_password_gl):
     if garmin_password is None or garmin_password == '':
         print("未设置账号密码，跳过脚本")
         return
@@ -23,7 +23,7 @@ def syncData(garmin_email, garmin_password):
 
     try:
         garth.login(garmin_email, garmin_password)
-        global_garth.login(garmin_email, garmin_password)
+        global_garth.login(garmin_email_gl, garmin_password_gl)
     except Exception:
         print("登录态失败")
         return False
@@ -71,4 +71,4 @@ def syncData(garmin_email, garmin_password):
 
     return True
 
-activity = syncData(os.getenv("GARMIN_RUN_EMAIL"), os.getenv("GARMIN_RUN_PASSWORD"))
+activity = syncData(os.getenv("GARMIN_RUN_EMAIL"), os.getenv("GARMIN_RUN_PASSWORD"), os.getenv("GARMIN_RUN_EMAIL_GLOBAL"), os.getenv("GARMIN_RUN_PASSWORD_GLOBAL"))
